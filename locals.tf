@@ -1,7 +1,7 @@
 locals {
   common_tags = {
     Project   = "Projeto Final Bootcamp Elven Works"
-    CreatedAt = "09/05/2024"
+    CreatedAt = "19/05/2024"
     ManagedBy = "Terraform"
     Owner     = "João Paulo"
     Service   = "Wordpress Turbinado"
@@ -16,4 +16,11 @@ locals {
     aws_subnet.subnet-public-1a.id,
     aws_subnet.subnet-public-1b.id
   ]
+}
+
+
+## Variavel autoscaling  que irá taguear as instancias ##
+
+locals {
+  instance_name = "wordpress-instance"
 }

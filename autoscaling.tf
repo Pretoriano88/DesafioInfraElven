@@ -1,7 +1,5 @@
 # Criação de um grupo de Auto Scaling para as instâncias WordPress
-locals {
-  instance_name = "wordpress-instance"
-}
+
 
 # Criação de um grupo de Auto Scaling para as instâncias WordPress
 resource "aws_autoscaling_group" "wordpress_asg" {

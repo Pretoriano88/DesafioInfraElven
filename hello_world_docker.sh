@@ -2,17 +2,19 @@
 
 # Força o modo não interativo
 export DEBIAN_FRONTEND=noninteractive
+export NEEDRESTART_MODE=a
 
-# Atualiza a lista de pacotes sem interação, respondendo "sim" automaticamente
-yes | sudo apt update
+# Evita que qualquer interface seja exibida durante a instalação
+sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y update
 sleep 5  # Aguarda 5 segundos
 
-# Atualiza todos os pacotes instalados sem interação, respondendo "sim" automaticamente
-yes | sudo apt upgrade -y
+# Atualiza todos os pacotes instalados sem interação
+sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y upgrade
 sleep 5  # Aguarda 5 segundos
 
 # Instala o Docker (caso não esteja instalado) sem interação
-yes | sudo apt install -y docker.io
+echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
+sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -q -y install docker.io
 sleep 5  # Aguarda 5 segundos
 
 # Habilita e inicia o serviço Docker
