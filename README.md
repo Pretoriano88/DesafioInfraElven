@@ -1,4 +1,6 @@
 
+# DesafioInfraElven
+
 Documentação da Solução de Alta Disponibilidade e Escalabilidade
 I. Visão Geral da Arquitetura
 A solução implementada no repositório desafioTerraform foi projetada para atender a requisitos críticos de alta disponibilidade e escalabilidade, utilizando os serviços da AWS. O foco principal é a implantação de um ambiente WordPress robusto que possa lidar com variações de tráfego e garantir desempenho otimizado.
@@ -27,5 +29,6 @@ A escolha dos componentes da solução foi guiada pela necessidade de criar um a
 
 VI. Conclusão
 A arquitetura proposta não apenas cumpre os requisitos de alta disponibilidade e escalabilidade, mas também otimiza o desempenho com caching e implementa segurança robusta através do uso de VPNs e instâncias privadas. A solução está alinhada com as melhores práticas de arquitetura na nuvem, proporcionando uma base sólida para aplicações críticas na AWS.
-# DesafioInfraElven
-# DesafioInfraElven
+
+![image](https://github.com/user-attachments/assets/b8b544fb-747d-4ee4-861e-1856da2bf4bb)
+
