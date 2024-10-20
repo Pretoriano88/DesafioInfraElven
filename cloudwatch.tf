@@ -8,28 +8,28 @@ resource "aws_sns_topic" "ec2_cpu_sns" {
 # Assina o tópico SNS com o e-mail fornecido
 resource "aws_sns_topic_subscription" "email_subscription_CPU" {
   topic_arn = aws_sns_topic.ec2_cpu_sns.arn
-  protocol  = var.protocolo  # Define o protocolo de comunicação (ex: "email")
-  endpoint  = var.email      # Define o e-mail que vai receber os alertas
+  protocol  = var.protocolo # Define o protocolo de comunicação (ex: "email")
+  endpoint  = var.email     # Define o e-mail que vai receber os alertas
 }
 
 # Alarme para monitorar a utilização da CPU de uma instância EC2 privada
 resource "aws_cloudwatch_metric_alarm" "ec2_cpu" {
-  alarm_name                = "CPU EC2 Privada"
-  comparison_operator       = "GreaterThanThreshold"  # Aciona quando o valor excede o limite
-  evaluation_periods        = 2                        # Avalia 2 períodos de 120 segundos
-  metric_name               = "CPUUtilization"         # Métrica de utilização da CPU
-  namespace                 = "AWS/EC2"
-  period                    = 120                     # Período de 2 minutos
-  statistic                 = "Average"               # Estatística média da métrica
-  threshold                 = 80                      # Limite de 80% de uso de CPU
-  alarm_description         = "Alarme para monitorar a utilização da CPU da instância EC2"
+  alarm_name          = "CPU EC2 Privada"
+  comparison_operator = "GreaterThanThreshold" # Aciona quando o valor excede o limite
+  evaluation_periods  = 2                      # Avalia 2 períodos de 120 segundos
+  metric_name         = "CPUUtilization"       # Métrica de utilização da CPU
+  namespace           = "AWS/EC2"
+  period              = 120       # Período de 2 minutos
+  statistic           = "Average" # Estatística média da métrica
+  threshold           = 80        # Limite de 80% de uso de CPU
+  alarm_description   = "Alarme para monitorar a utilização da CPU da instância EC2"
 
   dimensions = {
-    InstanceId = aws_instance.servidor_dockerl.id     # Instância EC2 privada monitorada
+    InstanceId = aws_instance.servidor_dockerl.id # Instância EC2 privada monitorada
   }
 
-  alarm_actions = [aws_sns_topic.ec2_cpu_sns.arn]    # Ação de alarme para quando a CPU passar de 80%
-  ok_actions    = [aws_sns_topic.ec2_cpu_sns.arn]    # Ação quando a situação voltar ao normal
+  alarm_actions = [aws_sns_topic.ec2_cpu_sns.arn] # Ação de alarme para quando a CPU passar de 80%
+  ok_actions    = [aws_sns_topic.ec2_cpu_sns.arn] # Ação quando a situação voltar ao normal
 }
 
 # ----------------------------Métrica de Disponibilidade para EC2 Privada----------------------------
@@ -48,22 +48,22 @@ resource "aws_sns_topic_subscription" "email_subscription_pvt" {
 
 # Alarme para monitorar a disponibilidade de uma EC2 privada
 resource "aws_cloudwatch_metric_alarm" "ec2_availability_pvt" {
-  alarm_name                = "Disponibilidade EC2 Privada"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = 1                        # Um período de 5 minutos
-  metric_name               = "StatusCheckFailed"      # Métrica de verificação de status
-  namespace                 = "AWS/EC2"
-  period                    = 300                     # Período de 5 minutos
-  statistic                 = "Minimum"               # Verifica o valor mínimo da métrica
-  threshold                 = 0                       # Se a verificação falhar, aciona o alarme
-  alarm_description         = "Alarme para monitorar a disponibilidade da instância EC2"
+  alarm_name          = "Disponibilidade EC2 Privada"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1                   # Um período de 5 minutos
+  metric_name         = "StatusCheckFailed" # Métrica de verificação de status
+  namespace           = "AWS/EC2"
+  period              = 300       # Período de 5 minutos
+  statistic           = "Minimum" # Verifica o valor mínimo da métrica
+  threshold           = 0         # Se a verificação falhar, aciona o alarme
+  alarm_description   = "Alarme para monitorar a disponibilidade da instância EC2"
 
   dimensions = {
-    InstanceId = aws_instance.servidor_dockerl.id     # EC2 privada sendo monitorada
+    InstanceId = aws_instance.servidor_dockerl.id # EC2 privada sendo monitorada
   }
 
-  alarm_actions = [aws_sns_topic.ec2_availability_sns_pvt.arn]  # Ação ao disparar o alarme
-  ok_actions    = [aws_sns_topic.ec2_availability_sns_pvt.arn]  # Ação quando a instância estiver disponível
+  alarm_actions = [aws_sns_topic.ec2_availability_sns_pvt.arn] # Ação ao disparar o alarme
+  ok_actions    = [aws_sns_topic.ec2_availability_sns_pvt.arn] # Ação quando a instância estiver disponível
 }
 
 # ----------------------------Métrica de Disponibilidade para EC2 VPN----------------------------
@@ -82,18 +82,18 @@ resource "aws_sns_topic_subscription" "email_subscription_d" {
 
 # Alarme para monitorar a disponibilidade de uma EC2 VPN
 resource "aws_cloudwatch_metric_alarm" "ec2_availability" {
-  alarm_name                = "Disponibilidade EC2 VPN"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = 1
-  metric_name               = "StatusCheckFailed"
-  namespace                 = "AWS/EC2"
-  period                    = 300
-  statistic                 = "Minimum"
-  threshold                 = 0
-  alarm_description         = "Alarme para monitorar a disponibilidade da instância EC2 VPN"
+  alarm_name          = "Disponibilidade EC2 VPN"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  metric_name         = "StatusCheckFailed"
+  namespace           = "AWS/EC2"
+  period              = 300
+  statistic           = "Minimum"
+  threshold           = 0
+  alarm_description   = "Alarme para monitorar a disponibilidade da instância EC2 VPN"
 
   dimensions = {
-    InstanceId = aws_instance.servidor_pritunl.id          # Instância VPN sendo monitorada
+    InstanceId = aws_instance.servidor_pritunl.id # Instância VPN sendo monitorada
   }
 
   alarm_actions = [aws_sns_topic.ec2_availability_sns.arn]
@@ -116,18 +116,18 @@ resource "aws_sns_topic_subscription" "email_subscription_ntw" {
 
 # Alarme para monitorar o tráfego de entrada na instância EC2 WordPress
 resource "aws_cloudwatch_metric_alarm" "ec2_networkin" {
-  alarm_name                = "Tráfego de entrada wordpress"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = 2
-  metric_name               = "NetworkIn"
-  namespace                 = "AWS/EC2"
-  period                    = 120
-  statistic                 = "Average"
-  threshold                 = 524288000  # Limite de 500 MB
-  alarm_description         = "Alarme para monitorar o tráfego de entrada da instância EC2 WordPress"
+  alarm_name          = "Tráfego de entrada wordpress"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "NetworkIn"
+  namespace           = "AWS/EC2"
+  period              = 120
+  statistic           = "Average"
+  threshold           = 524288000 # Limite de 500 MB
+  alarm_description   = "Alarme para monitorar o tráfego de entrada da instância EC2 WordPress"
 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.wordpress_asg.name  # Referência ao grupo de Auto Scaling
+    AutoScalingGroupName = aws_autoscaling_group.wordpress_asg.name # Referência ao grupo de Auto Scaling
   }
 
   alarm_actions = [aws_sns_topic.ec2_networkin_sns.arn]
@@ -150,18 +150,18 @@ resource "aws_sns_topic_subscription" "email_subscription_bb" {
 
 # Alarme para monitorar o Burst Balance do RDS
 resource "aws_cloudwatch_metric_alarm" "rds_bb" {
-  alarm_name                = "Burst Balance RDS"
-  comparison_operator       = "LessThanThreshold"    # Aciona quando o balance é inferior a 20%
-  evaluation_periods        = 1
-  metric_name               = "BurstBalance"
-  namespace                 = "AWS/RDS"
-  period                    = 300
-  statistic                 = "Average"
-  threshold                 = 20                    # Limite de 20% de Burst Balance
-  alarm_description         = "Alarme para monitorar o Burst Balance do RDS"
+  alarm_name          = "Burst Balance RDS"
+  comparison_operator = "LessThanThreshold" # Aciona quando o balance é inferior a 20%
+  evaluation_periods  = 1
+  metric_name         = "BurstBalance"
+  namespace           = "AWS/RDS"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 20 # Limite de 20% de Burst Balance
+  alarm_description   = "Alarme para monitorar o Burst Balance do RDS"
 
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.bdword.id  # Banco de dados monitorado
+    DBInstanceIdentifier = aws_db_instance.bdword.id # Banco de dados monitorado
   }
 
   alarm_actions = [aws_sns_topic.rds_bb_sns.arn]
@@ -184,18 +184,18 @@ resource "aws_sns_topic_subscription" "email_subscription_cpu" {
 
 # Alarme para monitorar a utilização da CPU no RDS
 resource "aws_cloudwatch_metric_alarm" "rds_cpu" {
-  alarm_name                = "Utilização CPU RDS"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = 2
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/RDS"
-  period                    = 120
-  statistic                 = "Average"
-  threshold                 = 80
-  alarm_description         = "Alarme para monitorar a utilização da CPU do RDS"
+  alarm_name          = "Utilização CPU RDS"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/RDS"
+  period              = 120
+  statistic           = "Average"
+  threshold           = 80
+  alarm_description   = "Alarme para monitorar a utilização da CPU do RDS"
 
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.bdword.id  # Referência à instância do RDS
+    DBInstanceIdentifier = aws_db_instance.bdword.id # Referência à instância do RDS
   }
 
   alarm_actions = [aws_sns_topic.rds_cpu_sns.arn]
@@ -218,18 +218,18 @@ resource "aws_sns_topic_subscription" "email_subscription_m" {
 
 # Métrica de Uso de Memória, aciona mais que 80%
 resource "aws_cloudwatch_metric_alarm" "memcached_memory_usage" {
-  alarm_name                = "Uso Memória do Memcached"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = 2
-  metric_name               = "BytesUsedForCache"
-  namespace                 = "AWS/ElastiCache"
-  period                    = 120
-  statistic                 = "Average"
-  threshold                 = 80
-  alarm_description         = "Alarme para monitorar o uso de memória do Memcached"
-  
+  alarm_name          = "Uso Memória do Memcached"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "BytesUsedForCache"
+  namespace           = "AWS/ElastiCache"
+  period              = 120
+  statistic           = "Average"
+  threshold           = 80
+  alarm_description   = "Alarme para monitorar o uso de memória do Memcached"
+
   dimensions = {
-    CacheClusterId = aws_elasticache_cluster.cache_cluster.id  # Referência ao cluster do Memcached
+    CacheClusterId = aws_elasticache_cluster.cache_cluster.id # Referência ao cluster do Memcached
   }
 
   alarm_actions = [aws_sns_topic.memcached_memory_usage_sns.arn]

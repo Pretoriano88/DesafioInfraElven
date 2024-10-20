@@ -17,7 +17,7 @@ resource "aws_efs_mount_target" "mount_targets" {
   file_system_id  = aws_efs_file_system.file_system_1.id
   subnet_id       = local.public_subnets[count.index]
   security_groups = [aws_security_group.efs_sg.id]
- }
+}
 
 
 /* resource "aws_efs_mount_target" "mount_targets":
@@ -36,4 +36,8 @@ security_groups = [aws_security_group.efs_sg.id]:
 
 Este parâmetro associa um grupo de segurança ao mount target. O grupo de segurança é especificado pelo ID do recurso aws_security_group.efs_sg, que deve ser definido em outro lugar no código. Isso permite controlar o tráfego de rede para o mount target.
 Resumo
-Em resumo, este código configura dois pontos de montagem (mount targets) para um sistema de arquivos EFS na AWS, cada um em sub-redes diferentes e associados a um grupo de segurança específico. Isso é útil para garantir que instâncias em diferentes sub-redes possam acessar o mesmo sistema de arquivos EFS, proporcionando alta disponibilidade e redundância./*
+Em resumo, este código configura dois pontos de montagem (mount targets) para um sistema de arquivos EFS na AWS, cada um em sub-redes diferentes e associados a um grupo de segurança específico. Isso é útil para garantir que instâncias em diferentes sub-redes possam acessar o mesmo sistema de arquivos EFS, proporcionando alta disponibilidade e redundância.
+
+
+
+*/

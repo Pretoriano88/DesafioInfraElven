@@ -14,7 +14,7 @@ resource "aws_security_group" "efs_sg" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"  # Permitir todo o tráfego de saída
+    protocol    = "-1" # Permitir todo o tráfego de saída
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
@@ -71,9 +71,9 @@ resource "aws_security_group" "allow_rds" {
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = [
-        aws_subnet.subnet-public-1a.cidr_block,
-        aws_subnet.subnet-public-1b.cidr_block
-        ]
+      aws_subnet.subnet-public-1a.cidr_block,
+      aws_subnet.subnet-public-1b.cidr_block
+    ]
   }
 
   egress {
@@ -126,7 +126,7 @@ resource "aws_security_group" "pritunl_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   tags = {
+  tags = {
     Name = "Pritunl sg"
   }
 }
@@ -143,7 +143,7 @@ resource "aws_security_group" "sg_docker" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-    ingress {
+  ingress {
     description = "Permitir HTTP na porta 8080"
     from_port   = 22
     to_port     = 22
@@ -158,7 +158,7 @@ resource "aws_security_group" "sg_docker" {
     protocol    = "-1" # Permitir qualquer tráfego de saída
     cidr_blocks = ["0.0.0.0/0"]
   }
-   tags = {
+  tags = {
     Name = "Docker-sg"
   }
 }
