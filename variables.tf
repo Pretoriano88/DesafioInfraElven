@@ -20,6 +20,13 @@ variable "ami_image" {
   description = "ID da AMI usada para as instâncias EC2"
 }
 
+variable "ami_image_pritunl" {
+  type = string
+  description = "Imagem que o pritunl ira usar  "
+  default = "ami-04505e74c0741db8d"
+  
+}
+
 variable "type_instance" {
   type        = string
   description = "Tipo da instância EC2 (ex: t2.micro, t2.medium, etc.)"
