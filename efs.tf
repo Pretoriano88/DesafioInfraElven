@@ -13,7 +13,7 @@ resource "aws_efs_file_system" "file_system_1" {
 
 ################## Create EFS mount targets ################ 
 resource "aws_efs_mount_target" "mount_targets" {
-  count           = 2
+  count           = 4
   file_system_id  = aws_efs_file_system.file_system_1.id
   subnet_id       = local.public_subnets[count.index]
   security_groups = [aws_security_group.efs_sg.id]

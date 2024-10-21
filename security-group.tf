@@ -12,10 +12,14 @@ resource "aws_security_group" "efs_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1" # Permitir todo o tráfego de saída
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1" # Permitir todo o tráfego de saída
+    cidr_blocks = [
+      aws_subnet.subnet-public-1a.cidr_block,
+      aws_subnet.subnet-public-1b.cidr_block,
+      aws_subnet.subnet-private-2a.cidr_block,
+    aws_subnet.subnet-private-2b.cidr_block]
   }
   tags = {
     Name = "Efs-sg"
@@ -141,10 +145,10 @@ resource "aws_security_group" "sg_docker" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [aws_vpc.mainvpc.cidr_block]
   }
   ingress {
-    description = "Permitir HTTP na porta 8080"
+    description = "Permitir ssh na porta 8080"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

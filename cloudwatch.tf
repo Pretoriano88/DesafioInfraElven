@@ -235,3 +235,36 @@ resource "aws_cloudwatch_metric_alarm" "memcached_memory_usage" {
   alarm_actions = [aws_sns_topic.memcached_memory_usage_sns.arn]
   ok_actions    = [aws_sns_topic.memcached_memory_usage_sns.arn]
 }
+
+
+/*
+Métrica de CPU para EC2 Privada
+aws_sns_topic: Cria um tópico SNS (ec2_cpu_sns) para alertas relacionados à utilização de CPU.
+aws_sns_topic_subscription: Faz a assinatura do e-mail fornecido para receber os alertas de CPU através do protocolo especificado.
+aws_cloudwatch_metric_alarm: Cria um alarme (ec2_cpu) que monitora a métrica CPUUtilization de uma instância EC2 privada. O alarme é disparado quando a CPU excede 80% durante dois períodos consecutivos de 120 segundos.
+Métrica de Disponibilidade para EC2 Privada
+aws_sns_topic: Cria um tópico SNS para alertas de disponibilidade (ec2_availability_sns_pvt).
+aws_sns_topic_subscription: Faz a assinatura do e-mail para receber alertas de falha de disponibilidade da instância EC2 privada.
+aws_cloudwatch_metric_alarm: Cria um alarme para monitorar a métrica StatusCheckFailed da instância EC2 privada. Dispara o alarme se houver falha de status e retorna à normalidade se o status da instância estiver OK.
+Métrica de Disponibilidade para EC2 VPN
+aws_sns_topic: Cria um tópico SNS para alertas de disponibilidade da EC2 VPN.
+aws_sns_topic_subscription: Faz a assinatura para receber os alertas.
+aws_cloudwatch_metric_alarm: Cria um alarme para a métrica StatusCheckFailed na instância EC2 que hospeda a VPN.
+Métrica de Tráfego de Entrada (NetworkIn) para EC2 WordPress
+aws_sns_topic: Cria um tópico SNS para monitorar o tráfego de entrada na EC2 que hospeda o WordPress.
+aws_sns_topic_subscription: Faz a assinatura do e-mail para alertas sobre tráfego excessivo.
+aws_cloudwatch_metric_alarm: Define um alarme que monitora a métrica NetworkIn, disparando quando o tráfego de entrada exceder 500 MB em dois períodos consecutivos.
+Métrica de Burst Balance para RDS
+aws_sns_topic: Cria um tópico SNS para monitoramento do BurstBalance em RDS.
+aws_sns_topic_subscription: Assina o e-mail para alertas de Burst Balance.
+aws_cloudwatch_metric_alarm: Cria um alarme para disparar quando o Burst Balance cair abaixo de 20%, o que pode indicar um uso excessivo dos créditos de burst no banco de dados RDS.
+Métrica de CPU para RDS
+aws_sns_topic: Cria um tópico SNS para monitoramento de uso de CPU em RDS.
+aws_sns_topic_subscription: Faz a assinatura para receber alertas de uso excessivo de CPU.
+aws_cloudwatch_metric_alarm: Define um alarme que monitora a métrica CPUUtilization em instâncias RDS, disparando quando o uso de CPU exceder 80% em dois períodos consecutivos.
+Métrica de Uso de Memória para Memcached
+aws_sns_topic: Cria um tópico SNS para alertas de uso de memória no ElastiCache Memcached.
+aws_sns_topic_subscription: Faz a assinatura para receber alertas.
+aws_cloudwatch_metric_alarm: Define um alarme para monitorar o uso de memória no Memcached, disparando quando o uso de memória ultrapassar 80%.
+
+*/

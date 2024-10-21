@@ -12,9 +12,9 @@ resource "aws_instance" "servidor_dockerl" {
   vpc_security_group_ids = [aws_security_group.sg_docker.id]
 
   # User data - script de inicialização
- user_data = base64encode(
-  templatefile("hello_world_docker.sh", {})
-)
+  user_data = base64encode(
+    templatefile("hello_world_docker.sh", {})
+  )
 
 
 
