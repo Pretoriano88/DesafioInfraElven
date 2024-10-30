@@ -1,20 +1,11 @@
 #!/bin/bash
 
-# Força o modo não interativo para evitar prompts
-export DEBIAN_FRONTEND=noninteractive
-export NEEDRESTART_MODE=a
+# Atualiza os pacotes
 
-# Evita que qualquer interface seja exibida durante a instalação
-sudo apt-get -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" update
-
-# Atualiza todos os pacotes instalados sem interação
-sudo apt-get -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
-
-# Predefine respostas para prompts do debconf
-echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
+sudo apt-get update -q -y
 
 # Instala o Docker sem interação
-sudo apt-get -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install docker.io
+sudo apt-get install -q -y docker.io
 
 # Habilita e inicia o serviço Docker
 sudo systemctl enable docker
@@ -28,3 +19,8 @@ sudo docker run -d -p 8080:80 -v $(pwd)/index.html:/usr/share/nginx/html/index.h
 
 # Exibe a mensagem de sucesso
 echo "O container está rodando! Acesse no navegador: http://localhost:8080"
+
+# Ponto de montagem EFS compartilhado
+sudo mkdir -p /var/www/html/wp-content/uploads
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${efs_dns_name}:/ /var/www/html/wp-content/uploads
+echo "${efs_dns_name}:/ /var/www/html/wp-content/uploads nfs4 defaults,_netdev 0 0" | sudo tee -a /etc/fstab

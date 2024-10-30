@@ -41,3 +41,8 @@ sudo sh -c 'echo "* hard nofile 64000" >> /etc/security/limits.conf'
 sudo sh -c 'echo "* soft nofile 64000" >> /etc/security/limits.conf'
 sudo sh -c 'echo "root hard nofile 64000" >> /etc/security/limits.conf'
 sudo sh -c 'echo "root soft nofile 64000" >> /etc/security/limits.conf'
+
+# Ponto de montagem EFS compartilhado
+sudo mkdir -p /var/www/html/wp-content/uploads
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${efs_dns_name}:/ /var/www/html/wp-content/uploads
+echo "${efs_dns_name}:/ /var/www/html/wp-content/uploads nfs4 defaults,_netdev 0 0" | sudo tee -a /etc/fstab

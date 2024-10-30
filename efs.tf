@@ -6,17 +6,21 @@ resource "aws_efs_file_system" "file_system_1" {
   lifecycle_policy {
     transition_to_ia = "AFTER_30_DAYS"
   }
-  tags = {
+
+tags = merge(local.common_tags, {
     Name = "efs-wordpress"
-  }
+  })
+
 }
 
 ################## Create EFS mount targets ################ 
 resource "aws_efs_mount_target" "mount_targets" {
-  count           = 2
+  count           = 4
   file_system_id  = aws_efs_file_system.file_system_1.id
-  subnet_id       = local.public_subnets[count.index]
+  subnet_id       = local.total_subnets[count.index]
   security_groups = [aws_security_group.efs_sg.id]
+
+  
 }
 
 

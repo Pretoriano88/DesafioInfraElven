@@ -19,7 +19,9 @@ resource "aws_elasticache_cluster" "cache_cluster" {
   subnet_group_name    = aws_elasticache_subnet_group.this.name
   apply_immediately    = true
 
-  tags = {
-    "Name" = "Cluster_elasticache"
-  }
+
+
+  tags = merge(local.common_tags, {
+    Name = "Cluster_elasticache"
+  })
 }

@@ -12,10 +12,13 @@ locals {
 
 
 locals {
-  public_subnets = [
+  total_subnets = [
     aws_subnet.subnet-public-1a.id,
-    aws_subnet.subnet-public-1b.id
- 
+    aws_subnet.subnet-public-1b.id,
+    aws_subnet.subnet-private-2a.id,
+    aws_subnet.subnet-private-2b.id
+
+
   ]
 }
 

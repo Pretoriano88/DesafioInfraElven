@@ -5,6 +5,7 @@ terraform {
       version = "~> 5.0"
     }
   }
+
 }
 
 provider "aws" {
@@ -13,7 +14,7 @@ provider "aws" {
 
 resource "aws_key_pair" "keypair" {
   key_name   = "terraform-keypair"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = file("C:/Users/Praetorian/Desktop/ch/id_ed25519.pub")
 
 }
 

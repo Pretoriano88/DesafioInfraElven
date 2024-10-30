@@ -21,10 +21,10 @@ variable "ami_image" {
 }
 
 variable "ami_image_pritunl" {
-  type = string
+  type        = string
   description = "Imagem que o pritunl ira usar  "
-  default = "ami-04505e74c0741db8d"
-  
+  default     = "ami-04505e74c0741db8d"
+
 }
 
 variable "type_instance" {

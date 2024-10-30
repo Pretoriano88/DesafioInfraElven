@@ -8,18 +8,19 @@ resource "aws_security_group" "efs_sg" {
     from_port   = 2049
     to_port     = 2049
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1" # Permitir todo o tráfego de saída
     cidr_blocks = [
       aws_subnet.subnet-public-1a.cidr_block,
       aws_subnet.subnet-public-1b.cidr_block,
       aws_subnet.subnet-private-2a.cidr_block,
     aws_subnet.subnet-private-2b.cidr_block]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1" // Permitir todo o tráfego de saída
+    cidr_blocks      = ["0.0.0.0/0"] 
+    ipv6_cidr_blocks = ["::/0"]
   }
   tags = {
     Name = "Efs-sg"

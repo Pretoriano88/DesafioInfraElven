@@ -13,13 +13,16 @@ resource "aws_instance" "servidor_dockerl" {
 
   # User data - script de inicialização
   user_data = base64encode(
-    templatefile("hello_world_docker.sh", {})
+    templatefile("hello_world_docker.sh", {
+      efs_dns_name     = "${aws_efs_file_system.file_system_1.dns_name}" 
+    })
   )
 
 
 
-  tags = {
+
+  tags = merge(local.common_tags, {
     Name = "EC2 Docker"
-  }
+  })
 
 }
